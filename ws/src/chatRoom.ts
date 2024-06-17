@@ -23,15 +23,15 @@ export class ChatRoomManager {
     this.members = this.members.filter((member) => member != socket);
     console.log("Member removed. Current members:", this.members.length);
 
-    // const chat = this.chatRooms.find(
-    //   (chat) => chat.member1 === socket || chat.member2 === socket
-    // );
+    const chat = this.chatRooms.find(
+      (chat) => chat.member1 === socket || chat.member2 === socket
+    );
 
-    // if (chat) {
-    //   chat.handleDisconnect(socket);
-    //   this.chatRooms = this.chatRooms.filter((c) => c != chat);
-    //   console.log("Chat room removed. Current chat rooms:", this.chatRooms.length);
-    // }
+    if (chat) {
+      chat.handleDisconnect(socket);
+      this.chatRooms = this.chatRooms.filter((c) => c != chat);
+      console.log("Chat room removed. Current chat rooms:", this.chatRooms.length);
+    }
   }
 
   private addHandler(socket: WebSocket) {
@@ -68,6 +68,7 @@ export class ChatRoomManager {
       } else if (message.type === MESSAGE) {
         console.log("Inside message type");
 
+        //TODO: Group room chats
         // this.chatRooms.map((chat) => {
         //   chat.messages(socket, message.talk);
         // });
